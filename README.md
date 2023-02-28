@@ -18,3 +18,5 @@ Features:
   The buttons change your mouse cursor when you hover.
 
   Pause and exit buttons in-game.
+
+  And I actually made it look nice for the first time.
