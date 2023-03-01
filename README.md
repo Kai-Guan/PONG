@@ -1,4 +1,4 @@
-# PONG
+# PONG V1.0
 Pong made python in pygame by Kai Guan.
 
 Download and extract .zip and run Pong.py
