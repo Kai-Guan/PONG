@@ -20,3 +20,5 @@ Features:
   Pause and exit buttons in-game.
 
   And I actually made it look nice for the first time.
+
+I might make it oop at some point.
