@@ -1,5 +1,5 @@
 # PONG V1.1
-Pong made in python using pygame library
+Pong made in python using [pygame](https://www.pygame.org/) library
 
 Download and extract .zip and run Pong.py
 
