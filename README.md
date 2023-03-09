@@ -20,3 +20,5 @@ Features:
 - Pause and exit buttons in-game.
 
 - And I actually made it look nice for the first time.
+
+For an .exe self-extracting zip file go to py [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe)
