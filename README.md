@@ -7,16 +7,16 @@ The songs are from soulknight.
 
 Features:
 
-    Entirely made using pygame.
+>Entirely made using pygame.
 
-    Includes a starting screen.
+>Includes a starting screen.
 
-    1 player mode and 2 player mode.
+>1 player mode and 2 player mode.
 
-    The bot has 3 different difficulties.
+>The bot has 3 different difficulties.
 
-    The buttons change your mouse cursor when you hover.
+>The buttons change your mouse cursor when you hover.
 
-    Pause and exit buttons in-game.
+>Pause and exit buttons in-game.
 
-    And I actually made it look nice for the first time.
+>And I actually made it look nice for the first time.
