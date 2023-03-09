@@ -338,7 +338,7 @@ def gameReset():
     ball.reset()
 
 def stop():
-    global play, playing, difficultySelect, pausevar, paused
+    global play, playing, difficultySelect, pausevar
     play, playing, difficultySelect, pausevar = False, False, False, False
     click.play()
 
@@ -426,8 +426,8 @@ def controller():
     global playing, play, start_ticks, players, difficulty, gameStartseconds, gameStartStartTicks, startTimer, seconds, pausevar
     if not play:#title screen
         screen.fill((40, 40, 43))#((51, 255, 211))
-        P2 = button("2 Players",((screenWidth-175)/2),screenHeight-(screenHeight-330),175,50,white,(50,50,50),start2,black,30)
-        P1 = button("1 Player",((screenWidth-175)/2),screenHeight-(screenHeight-270),175,50,white,(50,50,50),start1,black,30)
+        P2 = button("2 Players",((screenWidth-175)/2),screenHeight-(screenHeight-330),175,50,white,(100,100,100),start2,black,30)
+        P1 = button("1 Player",((screenWidth-175)/2),screenHeight-(screenHeight-270),175,50,white,(100,100,100),start1,black,30)
         if P1 == False and P2 == False:
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
         logoImage = pygame.image.load("PONG.png")
@@ -438,6 +438,16 @@ def controller():
     elif players == 2 and play:
         screen.fill((40, 40, 43))
         if startTimer == True:
+
+            image = pygame.image.load("WS.png")
+            scaleMultiplyer = 1
+            scaledImage = pygame.transform.scale(image, (int(image.get_width()*scaleMultiplyer),int(image.get_height()*scaleMultiplyer)))
+            screen.blit(scaledImage, (25-(scaledImage.get_width()/2), 180-(scaledImage.get_height()/2)))
+
+            image = pygame.image.load("UD.png")
+            scaledImage = pygame.transform.scale(image, (int(image.get_width()*scaleMultiplyer),int(image.get_height()*scaleMultiplyer)))
+            screen.blit(scaledImage, (475-(scaledImage.get_width()/2), 180-(scaledImage.get_height()/2)))
+
             text = pygame.font.Font("minecraft.ttf",100)
             gameStartseconds=(pygame.time.get_ticks()-gameStartStartTicks)/1000
             if gameStartseconds<=3:
@@ -486,6 +496,11 @@ def controller():
         if difficultySelect == False:
             screen.fill((40, 40, 43))
             if startTimer == True:
+                image = pygame.image.load("UD.png")
+                scaleMultiplyer = 1
+                scaledImage = pygame.transform.scale(image, (int(image.get_width()*scaleMultiplyer),int(image.get_height()*scaleMultiplyer)))
+                screen.blit(scaledImage, (475-(scaledImage.get_width()/2), 180-(scaledImage.get_height()/2)))
+
                 text = pygame.font.Font("minecraft.ttf",100)
                 gameStartseconds=(pygame.time.get_ticks()-gameStartStartTicks)/1000
                 if gameStartseconds<3:
@@ -535,9 +550,9 @@ def controller():
             textSurf = text.render("Select Difficulty", True, (255, 255, 255))
             textSize = text.size("Select Difficulty")
             screen.blit(textSurf, ((500-textSize[0])/2,(230-textSize[1])/2))
-            easy = button("Easy",((screenWidth-175)/2),screenHeight-(screenHeight-210),175,50,white,(50,50,50),easyDifficulty,black,30)
-            hard = button("Hard",((screenWidth-175)/2),screenHeight-(screenHeight-270),175,50,white,(50,50,50),hardDifficulty,black,30)
-            impossible = button("Impossible",((screenWidth-175)/2),screenHeight-(screenHeight-330),175,50,white,(50,50,50),impossibleDifficulty,black,30)
+            easy = button("Easy",((screenWidth-175)/2),screenHeight-(screenHeight-210),175,50,white,(100,100,100),easyDifficulty,black,30)
+            hard = button("Hard",((screenWidth-175)/2),screenHeight-(screenHeight-270),175,50,white,(100,100,100),hardDifficulty,black,30)
+            impossible = button("Impossible",((screenWidth-175)/2),screenHeight-(screenHeight-330),175,50,white,(100,100,100),impossibleDifficulty,black,30)
             exit = button("Back",((screenWidth-85)/2),screenHeight-(screenHeight-420),85,30,(40, 40, 43),(40, 40, 43),stop,(255,255,255),30, 0, 127)
             if easy == False and hard == False and impossible == False and exit == False:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
