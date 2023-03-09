@@ -21,6 +21,6 @@ Features:
 
 - And I actually made it look nice for the first time.
 
-For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe)
+For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe)(may not be newest version)
 
 *works on windows so far, haven't tested other operating systems*
