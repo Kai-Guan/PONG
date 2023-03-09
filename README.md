@@ -1,4 +1,4 @@
-# PONG V1.0
+# PONG V1.1
 Pong made python in pygame by Kai Guan.
 
 Download and extract .zip and run Pong.py
@@ -22,4 +22,5 @@ Features:
 - And I actually made it look nice for the first time.
 
 For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe)
+
 *works on windows so far, haven't tested other operating systems*
