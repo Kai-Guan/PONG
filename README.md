@@ -26,4 +26,7 @@ For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://git
 *works on windows so far, haven't tested other operating systems*
 
 ## To-do List
-- [x] e
+- [ ] Add an options menu to toggle sound effects and music.
+- [ ] Add a music volume controller.
+- [ ] Add a bot v bot mode.
+- [ ] Add gamemodes.
