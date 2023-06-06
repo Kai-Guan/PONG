@@ -5,7 +5,7 @@ Download and extract .zip and run Pong.py
 
 The songs are from soulknight
 
-Features:
+## Features
 
 - Entirely made using pygame
 
@@ -24,3 +24,6 @@ Features:
 For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe) (may not be newest version)
 
 *works on windows so far, haven't tested other operating systems*
+
+## To-do List
+- [] e
