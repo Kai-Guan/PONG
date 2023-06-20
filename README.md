@@ -1,7 +1,7 @@
 # PONG V1.1
 Pong made in python using [pygame library](https://www.pygame.org/)
 
-Download and extract .zip and run Pong.py in VSCode
+Download and extract .zip and run Run.bat
 
 The songs are from soulknight
 
