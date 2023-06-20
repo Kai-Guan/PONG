@@ -1,0 +1,2 @@
+python pong.py
+pause
