@@ -564,6 +564,7 @@ if __name__=="__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONUP:
                 not_press = True
         
