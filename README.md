@@ -23,8 +23,6 @@ The songs are from soulknight
 
 For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe) (may not be newest version)
 
-*works on windows so far, haven't tested other operating systems*
-
 ## To-do List
 - [ ] Add an options menu to toggle sound effects and music.
 - [ ] Add a music volume controller.
