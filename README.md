@@ -46,10 +46,10 @@ For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://git
   
     For Windows 10,
 
-        - Right click on the speaker icon in the taskbar
-  
-        - Select Playback Devices
-  
-        - Select Speakers and Properties
-  
-        - Go to Enhancements tab and uncheck Equalizer and Loudness Equalization
+    - Right click on the speaker icon in the taskbar
+
+    - Select Playback Devices
+
+    - Select Speakers and Properties
+
+    - Go to Enhancements tab and uncheck Equalizer and Loudness Equalization
