@@ -1,6 +1,7 @@
-import pygame, pygame.mixer, sys, math, numpy, random
+import pygame, pygame.mixer, sys, math, numpy, random, cv2
 from os import listdir
 from os.path import isfile, join
+
 black = (0,0,0)
 white = (255,255,255)
 
@@ -46,6 +47,35 @@ def button(msg, x, y, w, h, defaultcolor, hovercolor, action, txtcolor,txtsize, 
         return(True)
     else:
         return(False)
+    
+def ImgButton(img, x, y, action, scale = 1):
+    global not_press
+    global mousedown
+
+    img = pygame.image.load(img)
+
+    imgW = img.get_width()*scale
+    imgH = img.get_height()*scale
+
+    mouse = pygame.mouse.get_pos()
+
+    scaledImage = pygame.transform.scale(img, (int(imgW*scale),int(imgH*scale)))
+    screen.blit(scaledImage, (x, y))
+
+    if x + imgW*scale > mouse[0] > x and y + imgH*scale > mouse[1] > y:
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+        if not_press == True:
+
+            click = pygame.mouse.get_pressed()
+
+            if click[0] == 1:
+                mousedown = True
+                action()
+                not_press = False
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+        return(True)
+    else:
+        return(False)
 
 def dashedLine(color, start_pos, end_pos, width=1, dash_length=10):
     x1, y1 = start_pos
@@ -75,6 +105,52 @@ def dashedLine(color, start_pos, end_pos, width=1, dash_length=10):
         end = (round(x2), round(y2))
         pygame.draw.line(screen, color, start, end, width)
     #https://codereview.stackexchange.com/questions/70143/drawing-a-dashed-line-with-pygame
+
+def roundedLine(p1, p2, color, w):
+    rect = pygame.Rect(*p1, p2[0]-p1[0], p2[1]-p1[1])
+    rect.normalize()
+    rect.inflate_ip(w, w)
+    line_image = numpy.zeros((rect.height, rect.width, 4), dtype = numpy.uint8)
+    c = pygame.Color(color)
+    line_image = cv2.line(line_image, (w//2, w//2), (p2[0]-p1[0]+w//2, p2[1]-p1[1]+w//2), (c.r, c.g, c.b, c.a), thickness=w)
+    line_surface = pygame.image.frombuffer(line_image.flatten(), rect.size, 'RGBA')
+    screen.blit(line_surface, line_surface.get_rect(center = rect.center))
+    #https://stackoverflow.com/questions/70051590/draw-lines-with-round-edges-in-pygame
+    #end 
+
+def slider(p1, p2, baseColor, circleColor, lineWidth, circleR, percentage):
+
+    mouse = pygame.mouse.get_pos()
+    trueLength = ((p2[0]-(int(lineWidth/2)))-(p1[0]+(int(lineWidth/2))))
+
+    #background line
+    roundedLine((p1[0]+(int(lineWidth/2)), p2[1]), (p2[0]-(int(lineWidth/2)), p2[1]), baseColor, lineWidth)
+
+
+    #mouse
+    adjustedX = int((p1[0])+int(lineWidth/2)+(percentage*trueLength))
+
+    if pygame.mouse.get_pressed()[0]:
+        if p2[0] > mouse[0] > p1[0] and p1[1] + circleR > mouse[1] > p1[1] - circleR:
+            mouseX = pygame.mouse.get_pos()[0]
+            if mouseX < p1[0]+(int(lineWidth/2)):
+                adjustedX = p1[0]+(int(lineWidth/2))
+            elif mouseX > p2[0]-(int(lineWidth/2)):
+                adjustedX = p2[0]-(int(lineWidth/2))
+            else:
+                adjustedX = mouseX
+
+
+
+    #filler line
+    roundedLine((p1[0]+(int(lineWidth/2)), p2[1]), (adjustedX, p2[1]), circleColor, lineWidth)
+
+    
+    #circle
+    pygame.draw.circle(screen, circleColor, (adjustedX, p1[1]), circleR)
+
+    #print((p1[0]+(int(lineWidth/2))+adjustedX)/trueLength)
+    return round((adjustedX-int(lineWidth/2)-p1[0])/trueLength, 2)
 
 def start1():
     global players, play, playing, difficultySelect
@@ -116,6 +192,24 @@ def impossibleDifficulty():
     gameReset()
     startGameTimer()
     #print(difficulty)
+
+def setting():
+    global settingmenu
+    if settingmenu == True:
+        settingmenu = False
+    else:
+        settingmenu = True
+    startPop.play()
+
+def musicVolumeToggle():
+    global musicVolume, previousVolume
+    if musicVolume != 0:
+        previousVolume = musicVolume
+        musicVolume = 0
+    else:
+        musicVolume = previousVolume
+        click.play()
+
 
 def startGameTimer():
     global gameStartStartTicks, startTimer, seconds
@@ -363,12 +457,14 @@ playing = False
 difficultySelect = False
 startTimer = False
 paused = False
+settingmenu = False
 difficulty = str()
 objectList2Players = pygame.sprite.Group()
 objectList1Player = pygame.sprite.Group()
 machineList = pygame.sprite.Group()
 scoreLeft = 0
 scoreRight = 0
+musicVolume = 1
 
 clock = pygame.time.Clock()
 
@@ -385,13 +481,15 @@ songs = [f for f in listdir("songs") if isfile(join("songs", f))]
 songName = random.choice(songs)
 print(f"Song: {songName}")
 pygame.mixer.music.load(f"songs/{songName}")
-pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.set_volume(musicVolume)
 pygame.mixer.music.play(-1)
 
 #sfx
 pop = pygame.mixer.Sound("sfx/pop.mp3")
 startPop = pygame.mixer.Sound("sfx/start pop.wav")
 click = pygame.mixer.Sound("sfx/click.wav")
+clickVolume = 5
+startPopVolume = 0.6
 click.set_volume(5)
 startPop.set_volume(0.6)
 
@@ -423,24 +521,70 @@ objectList1Player.add(ball)
 #####################
 
 def controller():
-    global playing, play, start_ticks, players, difficulty, gameStartseconds, gameStartStartTicks, startTimer, seconds, pausevar
-    if not play:#title screen
-        screen.fill((40, 40, 43))#((51, 255, 211))
-        P2 = button("2 Players",((screenWidth-175)/2),screenHeight-(screenHeight-330),175,50,white,(100,100,100),start2,black,30)
-        P1 = button("1 Player",((screenWidth-175)/2),screenHeight-(screenHeight-270),175,50,white,(100,100,100),start1,black,30)
-        if P1 == False and P2 == False:
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-        logoImage = pygame.image.load("PONG.png")
-        scaleMultiplyer = 2
-        scaledImage = pygame.transform.scale(logoImage, (int(142*scaleMultiplyer),int(75*scaleMultiplyer)))
-        screen.blit(scaledImage, ((screenWidth-scaledImage.get_width())/2, scaledImage.get_height()/2-50))
-        pausevar = False
+    global playing, play, start_ticks, players, difficulty, gameStartseconds, gameStartStartTicks, startTimer, seconds, pausevar, settingMenu, musicVolume
+    if not play:#title screen or setting menu
+        if not settingmenu: # title screen
+            screen.fill((40, 40, 43))#((51, 255, 211))
+            P2 = button("2 Players",((screenWidth-175)/2),screenHeight-(screenHeight-330),175,50,white,(100,100,100),start2,black,30)
+            P1 = button("1 Player",((screenWidth-175)/2),screenHeight-(screenHeight-270),175,50,white,(100,100,100),start1,black,30)
+            settingButton = ImgButton("setting.png", 440, 440, setting, 0.5)
+            if P1 == False and P2 == False and settingButton == False:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            logoImage = pygame.image.load("PONG.png")
+            scaleMultiplyer = 2
+            scaledImage = pygame.transform.scale(logoImage, (int(142*scaleMultiplyer),int(75*scaleMultiplyer)))
+            screen.blit(scaledImage, ((screenWidth-scaledImage.get_width())/2, scaledImage.get_height()/2-50))
+            pausevar = False
+        else: # setting menu
+            screen.fill((40, 40, 43))
+            
+            text = pygame.font.Font("minecraft.ttf",55)
+            textSurf = text.render("Settings", True, (255, 255, 255))
+            textSize = text.size("Settings")
+            screen.blit(textSurf, ((500-textSize[0])/2,(230-textSize[1])/2))
+
+            
+            text = pygame.font.Font("minecraft.ttf",25)
+            textSurf = text.render("Volume", True, (255, 255, 255))
+            textSize = text.size("Volume")
+            screen.blit(textSurf, ((500-textSize[0])/2, 175))
+
+            musicVolume = 1*slider((50,220), (410,220), (255,255,255), (63, 72, 204), 20, 15, musicVolume/1)
+
+            if musicVolume != 0:
+                volumeButton = ImgButton("Volume On.png", 430, 210, musicVolumeToggle, 1)
+            else:
+                volumeButton = ImgButton("Volume Off.png", 430, 210, musicVolumeToggle, 1)
+
+            pygame.mixer.music.set_volume(musicVolume)
+            click.set_volume(clickVolume*musicVolume)
+            startPop.set_volume(startPopVolume*musicVolume)
+
+
+            text = pygame.font.Font("minecraft.ttf",25)
+            textSurf = text.render("I'll add more", True, (255, 255, 255))
+            textSize = text.size("I'll add more")
+            screen.blit(textSurf, ((500-textSize[0])/2, 350))
+            textSurf = text.render("stuff here later.", True, (255, 255, 255))
+            textSize = text.size("stuff here later.")
+            screen.blit(textSurf, ((500-textSize[0])/2, 380))
+
+
+
+            settingButton = ImgButton("setting.png", 440, 440, setting, 0.5)
+            if settingButton == False and volumeButton == False:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+            #########################
+
+
     elif players == 2 and play:
         screen.fill((40, 40, 43))
         if startTimer == True:
 
-            image = pygame.image.load("WS.png")
             scaleMultiplyer = 1
+
+            image = pygame.image.load("WS.png")
             scaledImage = pygame.transform.scale(image, (int(image.get_width()*scaleMultiplyer),int(image.get_height()*scaleMultiplyer)))
             screen.blit(scaledImage, (25-(scaledImage.get_width()/2), 180-(scaledImage.get_height()/2)))
 
@@ -557,17 +701,20 @@ def controller():
             if easy == False and hard == False and impossible == False and exit == False:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-if __name__=="__main__":
+def run():
+    global screenWidth, screenHeight, not_press
     while True:
-        dt=clock.tick(30)
+        clock.tick(30)
         screenWidth, screenHeight = screen.get_size()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
-                sys.exit()
             if event.type == pygame.MOUSEBUTTONUP:
                 not_press = True
         
         controller()
 
         pygame.display.update()
+
+if __name__=="__main__":
+    run()
