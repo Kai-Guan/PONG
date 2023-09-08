@@ -7,7 +7,7 @@ The songs are from soulknight
 
 ## Dependencies:
 
-[pygame, pygame.mixer, sys, math, numpy, random, cv2]
+*pygame, pygame.mixer, sys, math, numpy, random, cv2*
 
 ## Features
 
