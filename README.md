@@ -5,6 +5,10 @@ Download and extract .zip and run Run.bat
 
 The songs are from soulknight
 
+## Dependencies:
+
+[pygame, pygame.mixer, sys, math, numpy, random, cv2]
+
 ## Features
 
 - Entirely made using pygame
