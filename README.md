@@ -37,12 +37,19 @@ For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://git
 
 ## Known Issues
 - Sometimes when loading the game there will be an error: 'pygame.error: ModPlug_Load failed'
+  
     This is due to .mp3 files being weird in pygame.
+
     Try running the game a few times again, it may not work on Linux.
 
 - Sometimes the volume option is broken.
+  
     For Windows 10,
+
         - Right click on the speaker icon in the taskbar
+  
         - Select Playback Devices
+  
         - Select Speakers and Properties
+  
         - Go to Enhancements tab and uncheck Equalizer and Loudness Equalization
