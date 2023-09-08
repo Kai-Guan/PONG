@@ -24,7 +24,7 @@ The songs are from soulknight
 For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe) (may not be newest version)
 
 ## To-do List
-- [.] Add an options menu to toggle sound effects and music.
-- [.] Add a music volume controller.
+- [1] Add an options menu to toggle sound effects and music.
+- [1] Add a music volume controller.
 - [ ] Add a bot v bot mode.
 - [ ] Add gamemodes.
