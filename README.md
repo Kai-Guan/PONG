@@ -5,6 +5,8 @@ Download and extract .zip and run Run.bat
 
 The songs are from soulknight
 
+Turns out pygame-gui exists, I hate myself
+
 ## Dependencies:
 
 *pygame, pygame.mixer, sys, math, numpy, random, cv2*
