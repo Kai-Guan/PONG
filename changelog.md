@@ -11,3 +11,5 @@
 - Changed game speed (fps as not using delta time).
 
 - Added a hover animation to logo in start screen.
+
+- Added a volume selection panel.
