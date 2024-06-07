@@ -194,9 +194,10 @@ def impossibleDifficulty():
     #print(difficulty)
 
 def setting():
-    global settingmenu
+    global settingmenu, n
     if settingmenu == True:
         settingmenu = False
+        n = 0
     else:
         settingmenu = True
     startPop.play()
@@ -432,8 +433,8 @@ def gameReset():
     ball.reset()
 
 def stop():
-    global play, playing, difficultySelect, pausevar
-    play, playing, difficultySelect, pausevar = False, False, False, False
+    global play, playing, difficultySelect, pausevar, n
+    play, playing, difficultySelect, pausevar, n = False, False, False, False, 0
     click.play()
 
 def pause():
@@ -465,7 +466,9 @@ machineList = pygame.sprite.Group()
 scoreLeft = 0
 scoreRight = 0
 musicVolume = 1
+n = 0
 
+fps = 45
 clock = pygame.time.Clock()
 
 #timer
@@ -521,7 +524,7 @@ objectList1Player.add(ball)
 #####################
 
 def controller():
-    global playing, play, start_ticks, players, difficulty, gameStartseconds, gameStartStartTicks, startTimer, seconds, pausevar, settingMenu, musicVolume
+    global playing, play, start_ticks, players, difficulty, gameStartseconds, gameStartStartTicks, startTimer, seconds, pausevar, settingMenu, musicVolume, n, fps
     if not play:#title screen or setting menu
         if not settingmenu: # title screen
             screen.fill((40, 40, 43))#((51, 255, 211))
@@ -533,8 +536,9 @@ def controller():
             logoImage = pygame.image.load("PONG.png")
             scaleMultiplyer = 2
             scaledImage = pygame.transform.scale(logoImage, (int(142*scaleMultiplyer),int(75*scaleMultiplyer)))
-            screen.blit(scaledImage, ((screenWidth-scaledImage.get_width())/2, scaledImage.get_height()/2-50))
+            screen.blit(scaledImage, ((screenWidth-scaledImage.get_width())/2, float(scaledImage.get_height()/2-20+(8*math.sin(math.radians(n*4))))))
             pausevar = False
+            n+=1
         else: # setting menu
             screen.fill((40, 40, 43))
             
@@ -704,7 +708,7 @@ def controller():
 def run():
     global screenWidth, screenHeight, not_press
     while True:
-        clock.tick(30)
+        clock.tick(fps)
         screenWidth, screenHeight = screen.get_size()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
