@@ -27,7 +27,7 @@ Turns out pygame-gui exists, I hate myself
 
 - And I actually made it look nice for the first time.
 
-- *NEW:* I ADDED A SETTINGS MENU, YEAHHHHHH (the slider took 2.5 hours -.-)
+- *NEW:* I ADDED A SETTINGS MENU
 
 For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://github.com/Kai-Guan/PONG-exe) (may not be newest version)
 
