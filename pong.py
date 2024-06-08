@@ -194,10 +194,9 @@ def impossibleDifficulty():
     #print(difficulty)
 
 def setting():
-    global settingmenu, n
+    global settingmenu
     if settingmenu == True:
         settingmenu = False
-        n = 0
     else:
         settingmenu = True
     startPop.play()
@@ -538,14 +537,13 @@ def controller():
             scaledImage = pygame.transform.scale(logoImage, (int(142*scaleMultiplyer),int(75*scaleMultiplyer)))
             screen.blit(scaledImage, ((screenWidth-scaledImage.get_width())/2, float(scaledImage.get_height()/2-20+(8*math.sin(math.radians(n*4))))))
             pausevar = False
-            n+=1
         else: # setting menu
             screen.fill((40, 40, 43))
             
             text = pygame.font.Font("minecraft.ttf",55)
             textSurf = text.render("Settings", True, (255, 255, 255))
             textSize = text.size("Settings")
-            screen.blit(textSurf, ((500-textSize[0])/2,(230-textSize[1])/2))
+            screen.blit(textSurf, ((500-textSize[0])/2,(230-textSize[1])/2+(8*math.sin(math.radians(n*4)))))
 
             
             text = pygame.font.Font("minecraft.ttf",25)
@@ -697,13 +695,14 @@ def controller():
             text = pygame.font.Font("minecraft.ttf",55)
             textSurf = text.render("Select Difficulty", True, (255, 255, 255))
             textSize = text.size("Select Difficulty")
-            screen.blit(textSurf, ((500-textSize[0])/2,(230-textSize[1])/2))
+            screen.blit(textSurf, ((500-textSize[0])/2,(230-textSize[1])/2+(8*math.sin(math.radians(n*4)))))
             easy = button("Easy",((screenWidth-175)/2),screenHeight-(screenHeight-210),175,50,white,(100,100,100),easyDifficulty,black,30)
             hard = button("Hard",((screenWidth-175)/2),screenHeight-(screenHeight-270),175,50,white,(100,100,100),hardDifficulty,black,30)
             impossible = button("Impossible",((screenWidth-175)/2),screenHeight-(screenHeight-330),175,50,white,(100,100,100),impossibleDifficulty,black,30)
             exit = button("Back",((screenWidth-85)/2),screenHeight-(screenHeight-420),85,30,(40, 40, 43),(40, 40, 43),stop,(255,255,255),30, 0, 127)
             if easy == False and hard == False and impossible == False and exit == False:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+    n+=1
 
 def run():
     global screenWidth, screenHeight, not_press
