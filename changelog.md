@@ -13,3 +13,5 @@
 - Added a hover animation to logo in start screen.
 
 - Added a volume selection panel.
+
+- Changed winning to require two points clear above 7
