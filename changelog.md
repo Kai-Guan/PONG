@@ -10,8 +10,8 @@
 ### V1.2
 - Changed game speed (fps as not using delta time).
 
-- Added a hover animation to logo in start screen.
+- Added a hover animations to the logo and some text.
 
 - Added a volume selection panel.
 
-- Changed winning to require two points clear above 7
+- Changed winning to require two points clear above 7.
