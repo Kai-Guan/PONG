@@ -338,7 +338,7 @@ class Ball(pygame.sprite.Sprite):
 
         startPop.play()
 
-        if scoreRight == 7 or scoreLeft == 7:
+        if (scoreRight >= 7 or scoreLeft >= 7) and abs(scoreRight-scoreLeft)>=2:
             playing = False
             start_ticks=pygame.time.get_ticks()
 
@@ -433,8 +433,8 @@ def gameReset():
     ball.reset()
 
 def stop():
-    global play, playing, difficultySelect, pausevar, n
-    play, playing, difficultySelect, pausevar, n = False, False, False, False, 0
+    global play, playing, difficultySelect, pausevar, n, difficulty
+    difficulty, play, playing, difficultySelect, pausevar, n = None, False, False, False, False, 0
     click.play()
 
 def pause():
