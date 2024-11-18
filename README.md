@@ -46,7 +46,7 @@ For an .exe self-extracting zip file go to my [Pong.exe Github Page](https://git
 
 - Sometimes the volume option is broken.
   
-    For Windows 10,
+    For Windows,
 
     - Right click on the speaker icon in the taskbar
 
